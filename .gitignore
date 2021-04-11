@@ -127,3 +127,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Visualstudio
+.vscode/
+
+# Local config
+sweep.json
+
+# Test data
+
+testdata*/
+
+# Local virtualenv
+
+ve/
