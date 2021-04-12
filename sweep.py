@@ -42,7 +42,7 @@ def find_new_clips(args):
         if age_in_seconds > args.max_age_seconds:
             logging.warning("%s is too old to process (%.2f seconds old)", clip, age_in_seconds)
             continue
-        if age_in_seconds < 10:
+        if age_in_seconds < 30:
             logging.warning("%s is too young to process (%.2f seconds old)", clip, age_in_seconds)
             continue
         clips_to_process.append({'path': clip, 'age_in_seconds': age_in_seconds,
