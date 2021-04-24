@@ -210,6 +210,9 @@ def process_clips(args, clips, tmpdir):
         clip_name = clip['name']
         clip_base = clip_name.split('.')[0]
         camera = clip['camera'].capitalize()
+        if clip['Mbytes'] < args.min_telegram_mbytes:
+            logging.warning("%s is too small to post [%.2f]Mb", clip_base, clip['Mbytes'])
+            continue
         if clip['Mbytes'] > args.max_telegram_mbytes:
             new_clip, mbytes, new_scale = downscale(args, clip['path'], clip_name, tmpdir)
             new_scale = f",{new_scale}" if new_scale else ""
@@ -244,14 +247,18 @@ def main():
                          default=config.get("max_age_seconds", 600))
     parser.add_argument("--max_telegram_mbytes", help="Max clip size to post",
                          default=config.get("max_telegram_mbytes", 9))
+    parser.add_argument("--min_telegram_mbytes", help="Min clip size to post",
+                         default=config.get("min_telegram_mbytes", 0.5))
     parser.add_argument("--max_chunks", help="Limit on number of chunks per clip",
                          default=config.get("max_chunks", 20))
     parser.add_argument("--max_days_to_keep", help="Housekeep old clips",
                          default=config.get("max_days_to_keep", 3))
     parser.add_argument("--downscale", action='store_true', help="Don't attempt to downscale")
     parser.add_argument("--dummy_run", action='store_true', help="Don't post to Telegram")
+    parser.add_argument("--debug", action='store_true', help="Debug level logging")
     args = parser.parse_args()
-    logging.basicConfig(format='%(levelname)s:%(asctime)s %(message)s', level=logging.DEBUG)
+    loglevel = logging.INFO if not args.debug else logging.DEBUG
+    logging.basicConfig(format='%(levelname)s:%(asctime)s %(message)s', level=loglevel)
     logging.info("%s Beginning Sweep %s", "#"*30, "#"*30)
     housekeep(args)
 
