@@ -141,7 +141,3 @@ testdata*/
 # Local virtualenv
 
 ve/
-
-# Local install and run
-
-sweep.sh
