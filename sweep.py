@@ -178,7 +178,7 @@ def housekeep(args):
         attrs = os.stat(clip)
         age_in_days = (now - attrs.st_mtime) / 86400
         if age_in_days > args.max_days_to_keep:
-            logging.info("Removing %s which is %.2f days old", clip.replace(root,""), age_in_days)
+            logging.info("Removing %s which is %.2f days old", clip.replace(args.root,""), age_in_days)
             os.remove(clip)
 
 def rename_clips(args, clips, tmpdir):
