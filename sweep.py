@@ -213,6 +213,10 @@ def process_clips(args, clips, tmpdir):
         if clip['Mbytes'] < args.min_telegram_mbytes:
             logging.warning("%s is too small to post [%.2f]Mb", clip_base, clip['Mbytes'])
             continue
+        duration = get_duration(clip['path'])
+        if duration < 2:
+            logging.warning("%s is too short to post [%.2f seconds]", clip_base, duration)
+            continue
         if clip['Mbytes'] > args.max_telegram_mbytes:
             new_clip, mbytes, new_scale = downscale(args, clip['path'], clip_name, tmpdir)
             new_scale = f",{new_scale}" if new_scale else ""
