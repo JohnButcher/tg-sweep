@@ -103,7 +103,7 @@ def downscale(args, clip_path, clip_name, tmpdir):
 
 def get_duration(clip_path):
 
-    result = subprocess.run(['ffprobe', '-show_format', '-v', 'quiet',
+    result = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
                             '-of', 'json', clip_path],
                             stdout=subprocess.PIPE).stdout.decode('utf-8')
     return float(json.loads(result)['format']['duration'])                  
