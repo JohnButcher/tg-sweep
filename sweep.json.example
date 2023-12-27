@@ -1,5 +1,6 @@
 {"root": "/var/lib/motioneye",
 "max_age_seconds": 600,
+"min_age_seconds": 30,
 "max_days_to_keep": 3,
 "max_telegram_mbytes": 9,
 "max_chunks": 20,

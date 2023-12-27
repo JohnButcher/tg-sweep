@@ -42,7 +42,7 @@ def find_new_clips(args):
         if age_in_seconds > args.max_age_seconds:
             logging.warning("%s is too old to process (%.2f seconds old)", clip, age_in_seconds)
             continue
-        if age_in_seconds < 30:
+        if age_in_seconds < args.min_age_seconds:
             logging.warning("%s is too young to process (%.2f seconds old)", clip, age_in_seconds)
             continue
         clips_to_process.append({'path': clip, 'age_in_seconds': age_in_seconds,
@@ -249,6 +249,8 @@ def main():
                          default=config.get("root","/var/lib/motioneye"))
     parser.add_argument("--max_age_seconds", help="Max age to scan for",
                          default=config.get("max_age_seconds", 600))
+    parser.add_argument("--min_age_seconds", help="Min age of clip (if it's too young it may be still in creation)",
+                         default=config.get("min_age_seconds", 30))
     parser.add_argument("--max_telegram_mbytes", help="Max clip size to post",
                          default=config.get("max_telegram_mbytes", 9))
     parser.add_argument("--min_telegram_mbytes", help="Min clip size to post",
