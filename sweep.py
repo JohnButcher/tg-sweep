@@ -124,9 +124,9 @@ def chunk_clip(args, camera, clip_path, tmpdir, chunk_group=1):
         if chunk > args.max_chunks:
             logging.warning("Too many clips")
             caption = f"{camera} - Only posting {args.max_chunks} clips from {clip_base}, {mbytes:.2f}Mb"
-            frame_path = get_frame(clip_path, tmpdir, 24)
-            if frame_path:
-                post_image(args, frame_path, caption)
+            # frame_path = get_frame(clip_path, tmpdir, 24)
+            # if frame_path:
+            #     post_image(args, frame_path, caption)
             break
         chunk_cmd = ['ffmpeg', '-ss', str(current_duration), '-i', clip_path,
                     '-fs', str((int(args.max_telegram_mbytes * 2**20))), '-c', 'copy', chunk_path]
